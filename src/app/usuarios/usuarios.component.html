@@ -1,0 +1,92 @@
+<div class="container-main row">
+	<form class="col s12">
+		<div class="card col s12">
+			<span class="card-title row">
+        <h5>Usuarios</h5>
+    </span>
+			<div class="card-content row">
+				<div class="row" style="margin: auto!important;">
+					<div class="col s8">
+						<div class="input-field" id="stretch-div">
+							<input id="search" type="search" (focus)="search_focus(true)" placeholder="Buscar" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+							<label for="search"><i class="material-icons prefix" style="top:-0.5px;">search</i></label>
+							<i class="material-icons" (click)="search_focus(false)">close</i>
+						</div>
+						<!--<input id="search" type="text" placeholder="Buscar" (focusin)="search_focus(true)" (focusout)="search_focus(false)>-->
+					</div>
+					<div class="col s4" *ngIf="search_focused == false">
+						<a (click)="openModalAgregar()" style="float: right;" class="btn-flat waves-effect waves-light" [@show]="visibility[0]">
+							<i class="material-icons">add</i>
+						</a>
+						<a (click)="openModalModificar()" style="float: right;" class="btn-flat" [@show]="visibility[1]" [@moved]="position[0]">
+							<i class="material-icons">mode_edit</i>
+						</a>
+						<a (click)="deleteAlert()" style="float: right;" class="btn-flat" [@show]="visibility[2]" [@moved]="position[1]">
+							<i class="material-icons">delete</i>
+						</a>
+					</div>
+					<div class="col s4" *ngIf="search_focused == true">
+						<div class="input-field col s12" id="stretch-div">
+							<select materialize="material_select" id="filtro" [(ngModel)]="search_type" [ngModelOptions]="{standalone: true}">
+                <option value="none" disabled selected>Seleccione un filtro</option>
+                <option value="nombre">Nombre</option>
+                <option value="email">Email</option>
+              </select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<table class="bordered highlight responsive-table centered col s12 m12 l12">
+						<thead>
+							<tr>
+								<th>
+									<input type="checkbox" id="chk-all" class="filled-in" [ngModelOptions]="{standalone: true}" [(ngModel)]="check_all" (ngModelChange)="selectAll(check_all)">
+									<label for="chk-all"></label>
+								</th>
+								<th>
+									Nombre
+								</th>
+								<th>
+									C&eacute;dula
+								</th>
+								<th>
+									Cargo
+								</th>
+								<th>
+									Email
+								</th>
+								<th>
+									Celular
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of datos | usuariosFilter:search:search_type; let i = index">
+								<td>
+									<input type="checkbox" class="filled-in" [attr.id]="'chk-' + i" [(ngModel)]="check_values[i]" [ngModelOptions]="{standalone: true}"
+										(ngModelChange)="checked(i, check_values[i])">
+									<label [attr.for]="'chk-' + i"></label>
+								</td>
+								<td>{{item.nombre}}</td>
+								<td>{{item.cedula}}</td>
+								<td>{{item.cargo}}</td>
+								<td>{{item.email}}</td>
+								<td>{{item.celular}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!--Modal component (Nuevos usuarios)-->
+<modal [modalActions]='modalActions' (response)='onModalResponse($event)' (usuarioemitter)='onSave($event)'></modal>
+<!--Modal component (Modificar usuarios)-->
+<edit-modal [usuario]="usuario" [modalUpdateActions]="modalUpdateActions" (usuarioUpdateEmitter)="onUpdate($event)"></edit-modal>
+<!--Alert component-->
+<alert [alertActions]="alertActions" (response)='onDelete($event)'>
+	<!--Materialize toast-->
+	<span materialize [materializeActions]="globalActions"></span>
+</alert>

@@ -1,0 +1,70 @@
+<!--Modal add design-->
+<div id="modal" class="modal modal-fixed-footer modal-fixed-header" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+	<form [formGroup]="modalForm" (ngSubmit)="onSubmit(modalForm.value)">
+		<div class="modal-header">
+				<h4>Agregar Usuario</h4>
+		</div>
+    <div class="modal-content">
+			<div class="row">
+				<div class="input-field col s12">
+					<input type="text" id="txtNombre" [formControl]="nombre">
+					<i class="material-icons"></i>
+					<label for="txtNombre">Nombre</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field  col s12">
+					<input type="text" id="txtCedula" [formControl]="cedula">
+					<i class="material-icons"></i>
+					<label for="txtCedula">C&eacute;dula</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field  col s12">
+					<input type="text" id="txtEmail" [formControl]="email">
+					<i class="material-icons"></i>
+					<label for="txtEmail">Email</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class=" input-field col s12">
+					<select materialize="material_select" id="Cargo" [formControl]="cargo">
+          <option value="none" disabled selected>Seleccione un cargo</option>
+          <option value="Soporte t&eacute;cnico">Soporte t&eacute;cnico</option>
+          <option value="Administrador">Administrador</option>
+        </select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input type="text" id="txtTel" [formControl]="telefono">
+					<i class="material-icons"></i>
+					<label for="txtTel">Tel&eacute;fono</label>
+				</div>
+				<div class="input-field col s6">
+					<input type="text" class="" id="txtCelular" [formControl]="celular">
+					<i class="material-icons"></i>
+					<label for="txtCelular">Celular</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field  col s12">
+					<input type="password" id="txtPwd" [formControl]="clave">
+					<label for="txtPwd">Clave</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field  col s12">
+					<input type="password" id="txtConfirmPwd">
+					<label for="txtConfirmPwd">Confirmar clave</label>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a class="waves-effect btn-flat modal-close" (click)="closeModal()">Cerrar</a>
+			<button class="btn waves-effect waves-light modal-action modal-close" type="submit">Nuevo
+    			<i class="material-icons right">send</i>
+  			</button>
+		</div>
+	</form>
+</div>
